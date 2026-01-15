@@ -1,5 +1,5 @@
 <h2 align="center">
-    ───「 sᴛʀᴇᴀᴍɪғʏ 」───
+    ───「 ᴛᴇᴀᴍ-ᴠᴀᴍᴘɪʀᴇ 」───
 </h2>
 
 <p align="center">
@@ -22,7 +22,7 @@
     ─「 ᴅᴇᴩʟᴏʏ ᴏɴ ʜᴇʀᴏᴋᴜ 」─
 </h3>
 
-<p align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/TeamProBots/Streamify"> <img src="https://www.herokucdn.com/deploy/button.svg"></a></p>
+<p align="center"><a href="https://dashboard.heroku.com/new?template=https://github.com/ITZ-VAMPIRE07/VAMPIRE-SIMPEL"> <img src="https://www.herokucdn.com/deploy/button.svg"></a></p>
 
 <br />
 
@@ -55,7 +55,7 @@
    ```
 5. **Clone the Repository**
    ```bash
-   git clone https://github.com/TeamProBots/Streamify && cd Streamify
+   git clone https://github.com/ITZ-VAMPIRE07/VAMPIRE-SIMPEL && cd VAMPIRE-SIMPE
    ```
 6. **Install Requirements**
    ```bash
@@ -97,7 +97,7 @@ The AQIA Bot offers a range of commands to enhance your music listening experien
 | `/stop`                 | Stop the bot and clear the queue.           |
 | `/queue`                | Display the list of songs in the queue.     |
 
-For a full list of commands, use `/help` in [telegram](https://t.me/AqiaBot).
+For a full list of commands, use `/help` in [telegram](https://t.me/shreeviabot).
 
 ---
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif">
@@ -113,3 +113,4 @@ For a full list of commands, use `/help` in [telegram](https://t.me/AqiaBot).
 <p align="center">
 <a href="https://t.me/ProBotsHQ"><img src="https://img.shields.io/badge/-Update%20Channel-blue.svg?style=for-the-badge&logo=Telegram"></a>
 </p>
+

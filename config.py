@@ -57,7 +57,7 @@ UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
     "https://github.com/Itzz-Istkhar/sukku1",
 )
-UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
+UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "main")
 GIT_TOKEN = getenv(
     "GIT_TOKEN", None
 )
@@ -209,5 +209,6 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+
 
 

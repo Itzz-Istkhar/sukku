@@ -166,7 +166,7 @@ YOUTUBE_IMG_URL = "https://te.legra.ph/file/6298d377ad3eb46711644.jpg"
 SPOTIFY_ARTIST_IMG_URL = "https://te.legra.ph/file/37d163a2f75e0d3b403d6.jpg"
 SPOTIFY_ALBUM_IMG_URL = "https://te.legra.ph/file/b35fd1dfca73b950b1b05.jpg"
 SPOTIFY_PLAYLIST_IMG_URL = "https://te.legra.ph/file/95b3ca7993bbfaf993dcb.jpg"
-
+HELP_IMG_URL = "https://files.catbox.moe/0jtph4.jpg"
 # ------------------------------------------------------------------------
 # ------------------------------------------------------------------------
 # ------------------------------------------------------------------------
@@ -209,6 +209,7 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+
 
 
 

@@ -14,9 +14,9 @@ API_HASH = getenv("API_HASH")
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN")
 # -------------------------------------------------------
-OWNER_USERNAME = getenv("OWNER_USERNAME","AimmXD")
+OWNER_USERNAME = getenv("OWNER_USERNAME","itzz_Istkhar")
 # --------------------------------------------------------
-BOT_USERNAME = getenv("BOT_USERNAME" , "RuxiBot")
+BOT_USERNAME = getenv("BOT_USERNAME" , "Sukku_Music_Bot")
 # --------------------------------------------------------
 BOT_NAME = getenv("BOT_NAME" , "Ruxi")
 # ---------------------------------------------------------
@@ -209,6 +209,7 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+
 
 
 

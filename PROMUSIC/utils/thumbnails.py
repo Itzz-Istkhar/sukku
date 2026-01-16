@@ -1,13 +1,12 @@
 import os
 import re
-
 import aiofiles
 import aiohttp
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
-from py_yt import VideosSearch
-
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
+from unidecode import unidecode
+from youtubesearchpython.__future__ import VideosSearch
+from PROMUSIC import app
 from config import YOUTUBE_IMG_URL
-
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -17,179 +16,165 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
+def truncate(text, max_length=27):
+    if len(text) > max_length:
+        return text[: max_length - 1] + "…"
+    return text
+
+def truncate_channel(text, max_length=18):
+    if len(text) > max_length:
+        return text[: max_length - 1] + "…"
+    return text
+
+
+
+
+def crop_center_circle(img, output_size, border, crop_scale=1.5):
+    half_the_width = img.size[0] / 2
+    half_the_height = img.size[1] / 2
+    larger_size = int(output_size * crop_scale)
+    img = img.crop(
+        (
+            half_the_width - larger_size/2,
+            half_the_height - larger_size/2,
+            half_the_width + larger_size/2,
+            half_the_height + larger_size/2
+        )
+    )
+    
+    img = img.resize((output_size - 2*border, output_size - 2*border))
+    
+    
+    final_img = Image.new("RGBA", (output_size, output_size), "white")
+    
+    
+    mask_main = Image.new("L", (output_size - 2*border, output_size - 2*border), 0)
+    draw_main = ImageDraw.Draw(mask_main)
+    draw_main.ellipse((0, 0, output_size - 2*border, output_size - 2*border), fill=255)
+    
+    final_img.paste(img, (border, border), mask_main)
+    
+    
+    mask_border = Image.new("L", (output_size, output_size), 0)
+    draw_border = ImageDraw.Draw(mask_border)
+    draw_border.ellipse((0, 0, output_size, output_size), fill=255)
+    
+    result = Image.composite(final_img, Image.new("RGBA", final_img.size, (0, 0, 0, 0)), mask_border)
+    
+    return result
+
+
+def crop_center_square(img, output_size, crop_scale=1.5):
+    half_the_width = img.size[0] / 2
+    half_the_height = img.size[1] / 2
+    larger_size = int(output_size * crop_scale)
+
+    # Square crop
+    img = img.crop((
+        half_the_width - larger_size / 2,
+        half_the_height - larger_size / 2,
+        half_the_width + larger_size / 2,
+        half_the_height + larger_size / 2
+    ))
+
+    img = img.resize((output_size, output_size))
+
+    # Create a mask with rounded corners
+    mask = Image.new("L", (output_size, output_size), 0)
+    draw = ImageDraw.Draw(mask)
+    draw.rounded_rectangle((0, 0, output_size, output_size), radius=10, fill=255)
+
+    # Apply the mask
+    rounded_square = Image.new("RGBA", (output_size, output_size), (0, 0, 0, 0))
+    rounded_square.paste(img, (0, 0), mask)
+
+    return rounded_square
+
+
 
 async def get_thumb(videoid):
-    if os.path.isfile(f"cache/{videoid}.png"):
-        return f"cache/{videoid}.png"
+    if os.path.isfile(f"cache/{videoid}_v4.png"):
+        return f"cache/{videoid}_v4.png"
 
     url = f"https://www.youtube.com/watch?v={videoid}"
-    try:
-        results = VideosSearch(url, limit=1)
-        for result in (await results.next())["result"]:
-            try:
-                title = result["title"]
-                title = re.sub("\W+", " ", title)
-                title = title.title()
-            except:
-                title = "Unsupported Title"
-            try:
-                duration = result["duration"]
-            except:
-                duration = "Unknown"
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-            try:
-                views = result["viewCount"]["short"]
-            except:
-                views = "Unknown Views"
-
-        async with aiohttp.ClientSession() as session:
-            async with session.get(thumbnail) as resp:
-                if resp.status == 200:
-                    f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
-                    await f.write(await resp.read())
-                    await f.close()
-
-        youtube = Image.open(f"cache/thumb{videoid}.png")
-
-        GLOW_COLOR = "#ff0099"  # Neon Pink
-        BORDER_COLOR = "#FF1493"  # Deep Pink
-        image1 = changeImageSize(1280, 720, youtube)
-        image1 = image1.filter(ImageFilter.GaussianBlur(20))
-        image1 = ImageEnhance.Brightness(image1).enhance(0.4)
-
-        thumb_width = 840
-        thumb_height = 460
-
-        youtube_thumb = youtube.resize((thumb_width, thumb_height))
-
-        mask = Image.new("L", (thumb_width, thumb_height), 0)
-        draw_mask = ImageDraw.Draw(mask)
-        draw_mask.rounded_rectangle(
-            [(0, 0), (thumb_width, thumb_height)], radius=20, fill=255
-        )
-        youtube_thumb.putalpha(mask)
-        center_x = 640
-        center_y_img = 300
-        thumb_x = center_x - (thumb_width // 2)
-        thumb_y = center_y_img - (thumb_height // 2)
-        thumb_x2 = thumb_x + thumb_width
-        thumb_y2 = thumb_y + thumb_height
-
-        glow_layer = Image.new("RGBA", (1280, 720), (0, 0, 0, 0))
-        draw_glow = ImageDraw.Draw(glow_layer)
-
-        glow_expand = 20
-        draw_glow.rounded_rectangle(
-            [
-                (thumb_x - glow_expand, thumb_y - glow_expand),
-                (thumb_x2 + glow_expand, thumb_y2 + glow_expand),
-            ],
-            radius=30,
-            fill=GLOW_COLOR,
-        )
-        glow_layer = glow_layer.filter(ImageFilter.GaussianBlur(30))
-        image1.paste(glow_layer, (0, 0), glow_layer)
-        border_layer = Image.new("RGBA", (1280, 720), (0, 0, 0, 0))
-        draw_border = ImageDraw.Draw(border_layer)
-
-        border_expand = 5
-        draw_border.rounded_rectangle(
-            [
-                (thumb_x - border_expand, thumb_y - border_expand),
-                (thumb_x2 + border_expand, thumb_y2 + border_expand),
-            ],
-            radius=25,
-            fill=BORDER_COLOR,
-        )
-        image1.paste(border_layer, (0, 0), border_layer)
-
-        image1.paste(youtube_thumb, (thumb_x, thumb_y), youtube_thumb)
-
-        draw = ImageDraw.Draw(image1)
-
+    results = VideosSearch(url, limit=1)
+    for result in (await results.next())["result"]:
         try:
-            font_title = ImageFont.truetype("PROMUSIC/assets/font.ttf", 45)
-            font_details = ImageFont.truetype("PROMUSIC/assets/font2.ttf", 30)
-            font_watermark = ImageFont.truetype("PROMUSIC/assets/font2.ttf", 25)
+            title = result["title"]
+            title = re.sub("\W+", " ", title)
+            title = title.title()
         except:
-            font_title = ImageFont.truetype("arial.ttf", 45)
-            font_details = ImageFont.truetype("arial.ttf", 30)
-            font_watermark = ImageFont.truetype("arial.ttf", 25)
-
-        def get_text_width(text, font):
-            if hasattr(draw, "textlength"):
-                return draw.textlength(text, font=font)
-            else:
-                return draw.textsize(text, font=font)[0]
-
-        if len(title) > 45:
-            title = title[:45] + "..."
-
-        w_title = get_text_width(title, font_title)
-        text_y_pos = thumb_y2 + 50
-
-        draw.text(
-            ((1280 - w_title) / 2, text_y_pos),
-            text=title,
-            fill="white",
-            font=font_title,
-            stroke_width=1,
-            stroke_fill="black",
-        )
-
-        stats_text = f"YouTube : {views} | Time : {duration} | Player : @Sukku_Music_Bot"
-        w_stats = get_text_width(stats_text, font_details)
-        draw.text(
-            ((1280 - w_stats) / 2, text_y_pos + 70),
-            text=stats_text,
-            fill=BORDER_COLOR,
-            font=font_details,
-            stroke_width=1,
-            stroke_fill="black",
-        )
-
-        text_classy = "Itzz_Istkhar"
-        w_classy = get_text_width(text_classy, font_watermark)
-
-        draw.text(
-            (1280 - w_classy - 30, 30),
-            text=text_classy,
-            fill="yellow",
-            font=font_watermark,
-            stroke_width=1,
-            stroke_fill="black",
-        )
-
-        draw.text(
-            (30, 680),
-            text="IamIstkhar",
-            fill="white",
-            font=font_watermark,
-            stroke_width=1,
-            stroke_fill="black",
-        )
-
+            title = "Unsupported Title"
         try:
-            os.remove(f"cache/thumb{videoid}.png")
+            duration = result["duration"]
         except:
-            pass
+            duration = "Unknown Mins"
+        thumbnail = result["thumbnails"][0]["url"].split("?")[0]
+        try:
+            views = result["viewCount"]["short"]
+        except:
+            views = "Unknown Views"
+        try:
+            channel = result["channel"]["name"]
+        except:
+            channel = "Unknown Channel"
 
-        file_name = f"cache/{videoid}.png"
-        image1.save(file_name)
-        return file_name
+    async with aiohttp.ClientSession() as session:
+        async with session.get(thumbnail) as resp:
+            if resp.status == 200:
+                f = await aiofiles.open(f"cache/thumb{videoid}.png", mode="wb")
+                await f.write(await resp.read())
+                await f.close()
 
-    except Exception as e:
-        print(e)
-        return YOUTUBE_IMG_URL
+    youtube = Image.open(f"cache/thumb{videoid}.png")
+    image1 = changeImageSize(1280, 720, youtube)
+    image2 = image1.convert("RGBA")
+    background = image2.filter(filter=ImageFilter.BoxBlur(20))
+    enhancer = ImageEnhance.Brightness(background)
+    background = enhancer.enhance(0.6)
+    draw = ImageDraw.Draw(background)
+
+    title_font = ImageFont.truetype("PROMUSIC/assets/semibold.ttf", 28)
+    channel_name_font = ImageFont.truetype("PROMUSIC/assets/semibold.ttf", 20)
+    duration_font = ImageFont.truetype("PROMUSIC/assets/semibold.ttf", 18)
 
 
-async def get_qthumb(vidid):
+    # Load your image
+    my_image = Image.open("PROMUSIC/assets/bg.png").convert("RGBA")
+
+    # Resize if needed
+    my_image = my_image.resize((1280, 720))
+
+    # Calculate center position
+    bg_width, bg_height = background.size
+    img_width, img_height = my_image.size
+    center_x = (bg_width - img_width) // 2
+    center_y = (bg_height - img_height) // 2
+
+    # Paste image at center
+    background.paste(my_image, (center_x, center_y), my_image)
+
+    square_thumbnail = crop_center_square(youtube, 200)
+    square_thumbnail = square_thumbnail.resize((190, 190))
+    square_position = (302, 188)
+    background.paste(square_thumbnail, square_position, square_thumbnail)
+
+    # Video Title
+
+    text_x_position = 520
+
+    draw.text((text_x_position, 240), truncate(title), font=title_font, fill="white")
+    draw.text((text_x_position, 290), truncate_channel(channel), (255, 255, 255), font=channel_name_font)
+
+    
+    draw.text((930, 440), f"-{duration}", (174, 174, 174), font=duration_font)
+
+    background = background.convert("RGB")
+
+
     try:
-        url = f"https://www.youtube.com/watch?v={vidid}"
-        results = VideosSearch(url, limit=1)
-        for result in (await results.next())["result"]:
-            thumbnail = result["thumbnails"][0]["url"].split("?")[0]
-        return thumbnail
-    except Exception as e:
-        print(e)
-        return YOUTUBE_IMG_URL
+        os.remove(f"cache/thumb{videoid}.png")
+    except:
+        pass
+    background.save(f"cache/{videoid}_v4.png")
+    return f"cache/{videoid}_v4.png"

@@ -55,7 +55,7 @@ HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 SOURCE = getenv("SOURCE", "https://t.me/ProBotsHQ")
 UPSTREAM_REPO = getenv(
     "UPSTREAM_REPO",
-    "https://github.com/Itzz-Istkhar/sukku",
+    "https://github.com/Itzz-Istkhar/sukku1",
 )
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "master")
 GIT_TOKEN = getenv(
@@ -221,3 +221,4 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+

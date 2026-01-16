@@ -6,7 +6,7 @@ from PROMUSIC import app
 
 #--------------------------
 
-MUST_JOIN = "ProBotsHQ"
+MUST_JOIN = "Sukku_Bots"
 
 #------------------------
 @app.on_message(filters.incoming & filters.private, group=-1)

@@ -70,8 +70,8 @@ GIT_TOKEN = getenv(
 
 # ------------------------------------------------------------------------
 # -------------------------------------------------------------------------
-SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/ProBotsHQ")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/ProBotGc")
+SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/IamIstkhar")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+0oekeamatNtmNjll")
 CHAT = getenv("CHAT", "https://t.me/ProBotGc")
 # ------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------
@@ -86,7 +86,7 @@ CHAT = getenv("CHAT", "https://t.me/ProBotGc")
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
-AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "True")
+AUTO_LEAVING_ASSISTANT = getenv("AUTO_LEAVING_ASSISTANT", "False")
 AUTO_LEAVE_ASSISTANT_TIME = int(getenv("ASSISTANT_LEAVE_TIME", "9000"))
 SONG_DOWNLOAD_DURATION = int(getenv("SONG_DOWNLOAD_DURATION", "9999999"))
 SONG_DOWNLOAD_DURATION_LIMIT = int(getenv("SONG_DOWNLOAD_DURATION_LIMIT", "9999999"))
@@ -141,43 +141,31 @@ confirmer = {}
 # ------------------------------------------------------------------------
 
 STREAMI_PICS = [
-"https://i.ibb.co/JjV92trX/shinobu-1.jpg",
-"https://i.ibb.co/XrV33wrV/shinobu-2.jpg",
-"https://i.ibb.co/XxWNBjC4/shinobu-3.jpg",
-"https://i.ibb.co/7dW7WHgz/shinobu-4.jpg",
-"https://i.ibb.co/wFvwm8g3/shinobu-5.jpg",
-"https://i.ibb.co/yBycp03N/shinobu-6.jpg",
-"https://i.ibb.co/jPKWhzp5/shinobu-7.jpg",
-"https://i.ibb.co/zVVCg0gy/shinobu-8.jpg",
-"https://i.ibb.co/ds35F6z7/shinobu-9.jpg",
-"https://i.ibb.co/bjBMWRQ0/shinobu-10.jpg",
-"https://i.ibb.co/Rx8VDBX/shinobu-11.jpg",
-"https://i.ibb.co/9ktmGnr0/shinobu-12.jpg",
-"https://i.ibb.co/nNQGpdhq/shinobu-13.jpg",
-"https://i.ibb.co/dJVTfgpq/shinobu-14.jpg"
+"https://telegra.ph/file/88ad00ec16e231a238907.jpg",
+"https://telegra.ph/file/3c20ab1c3eb882d9a479b.jpg",
+"https://telegra.ph/file/4647ee70cefeae2d0e2d2.jpg",
+"https://telegra.ph/file/67ca2f32934bbce81ad16.jpg",
+"https://telegra.ph/file/d51a837b17fb53c3e752c.jpg",
+"https://telegra.ph/file/fa4130d97c1b0221ddc7f.jpg",
+"https://telegra.ph/file/db16c315a9e0990894764.jpg"
 ]
 
 START_IMG_URL = getenv(
-    "START_IMG_URL", "https://i.ibb.co/JjV92trX/shinobu-1.jpg"
+    "START_IMG_URL", "https://files.catbox.moe/cdnt73.mp4"
 )
-
-HELP_IMG_URL = getenv(
-    "HELP_IMG_URL", "https://i.ibb.co/JjV92trX/shinobu-1.jpg"
-)
-
 PING_IMG_URL = getenv(
-    "PING_IMG_URL", "https://i.ibb.co/Rx8VDBX/shinobu-11.jpg"
+    "PING_IMG_URL", "https://files.catbox.moe/73a0u1.jpg"
 )
-PLAYLIST_IMG_URL = "https://i.ibb.co/gL3ykkyh/play-music.jpg"
-STATS_IMG_URL = "https://i.ibb.co/pBqPtFYn/statistics.jpg"
-TELEGRAM_AUDIO_URL = "https://i.ibb.co/gL3ykkyh/play-music.jpg"
-TELEGRAM_VIDEO_URL = "https://i.ibb.co/gL3ykkyh/play-music.jpg"
-STREAM_IMG_URL = "https://i.ibb.co/0VKCS20y/stream.jpg"
-SOUNCLOUD_IMG_URL = "https://i.ibb.co/S4sPf3q8/soundcloud.jpg"
-YOUTUBE_IMG_URL = "https://i.ibb.co/xShkBVBK/youtube.jpg"
-SPOTIFY_ARTIST_IMG_URL = "https://i.ibb.co/XZfMS8Db/spotify.jpg"
-SPOTIFY_ALBUM_IMG_URL = "https://i.ibb.co/XZfMS8Db/spotify.jpg"
-SPOTIFY_PLAYLIST_IMG_URL = "https://i.ibb.co/XZfMS8Db/spotify.jpg"
+PLAYLIST_IMG_URL = "https://te.legra.ph/file/4ec5ae4381dffb039b4ef.jpg"
+STATS_IMG_URL = "https://files.catbox.moe/73a0u1.jpg"
+TELEGRAM_AUDIO_URL = "https://te.legra.ph/file/6298d377ad3eb46711644.jpg"
+TELEGRAM_VIDEO_URL = "https://te.legra.ph/file/6298d377ad3eb46711644.jpg"
+STREAM_IMG_URL = "https://te.legra.ph/file/bd995b032b6bd263e2cc9.jpg"
+SOUNCLOUD_IMG_URL = "https://te.legra.ph/file/bb0ff85f2dd44070ea519.jpg"
+YOUTUBE_IMG_URL = "https://te.legra.ph/file/6298d377ad3eb46711644.jpg"
+SPOTIFY_ARTIST_IMG_URL = "https://te.legra.ph/file/37d163a2f75e0d3b403d6.jpg"
+SPOTIFY_ALBUM_IMG_URL = "https://te.legra.ph/file/b35fd1dfca73b950b1b05.jpg"
+SPOTIFY_PLAYLIST_IMG_URL = "https://te.legra.ph/file/95b3ca7993bbfaf993dcb.jpg"
 
 # ------------------------------------------------------------------------
 # ------------------------------------------------------------------------
@@ -221,4 +209,5 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+
 

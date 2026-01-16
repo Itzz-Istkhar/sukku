@@ -64,4 +64,5 @@ yt-dlp[default]
 youtube-search
 youtube-search-python
 flask
+py-yt-search
 PyGithub

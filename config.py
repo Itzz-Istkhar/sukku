@@ -9,8 +9,9 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = int(getenv("29448785"))
-API_HASH = getenv("API_HASH")
+# Get this value from my.telegram.org/apps
+API_ID = int(getenv("API_ID","22540373"))
+API_HASH = getenv("API_HASH","41c21b4f450a79e23b0ccf7593aeaad3")
 # ------------------------------------------------------
 BOT_TOKEN = getenv("BOT_TOKEN")
 # -------------------------------------------------------
@@ -209,6 +210,7 @@ GREET = [
 YT_API_URL = getenv("YT_API_URL", 'https://api.nexgenbots.xyz')
 
 YT_API_KEY = getenv("YT_API_KEY", "NxGBNexGenBotsd22d66")
+
 
 
 
